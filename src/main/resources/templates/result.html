@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Details</title>
+  </head>
+  <body>
+    <h1>Game Details</h1>
+    <table data-th-object="${game}">
+      <tr>
+        <td>Game ID: <span data-th-text="*{gid}"></span></td>
+      </tr>
+      <tr>
+        <td>Name: <span data-th-text="*{name}"></span></td>
+      </tr>
+      <tr>
+        <td>Year: <span data-th-text="*{year}"></span></td>
+      </tr>
+      <tr>
+        <td>Ranking: <span data-th-text="*{ranking}"></span></td>
+      </tr>
+      <tr>
+        <td>User Rating: <span data-th-text="*{usersRated}"></span></td>
+      </tr>
+      <tr>
+        <td>
+          <a data-th-href="*{url}"><span data-th-text="*{url}"></span></a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img data-th-src="@{*{image}}" height="150px" width="150px" />
+        </td>
+      </tr>
+      <tr>
+        <td data-th-each="c : ${commentList}">
+            User: <span data-th-text="${c.name}"></span><br>
+            Rating: <span data-th-text="${c.rating}"></span><br>
+            Comments: <span data-th-text="${c.comments}"></span><br>
+        </td>
+      </tr>
+      <tr>
+        <td><h3>Submit comments</h3></td>
+      </tr>
+      <form
+        action="/comments/submit"
+        method="post"
+        data-th-object="${comments}"
+      >
+        <tr>
+          <td>Name: <input type="text" data-th-field="*{name}" /></td>
+        </tr>
+        <!-- <tr>
+          <td>Rating: <input type="number" step="1" min="1" max="10" data-th-field="*{rating}" /></td>
+        </tr> -->
+        <tr>
+          <td>
+            Rating:
+            <select data-th-field="*{rating}">
+              <option
+                data-th-each="r : ${ratingRange}"
+                data-th-value="${r}"
+                data-th-text="${r}"
+              ></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Comments: <input type="text" data-th-field="*{comments}" />
+          </td>
+        </tr>
+        <tr>
+            <td>
+              <input type="hidden" data-th-field="${game.gid}" data-th-value="${game.gid}"/>
+            </td>
+          </tr>
+        <tr>
+          <td><button type="submit">Submit</button></td>
+        </tr>
+      </form>
+    </table>
+  </body>
+</html>
